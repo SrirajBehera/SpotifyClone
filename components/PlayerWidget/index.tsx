@@ -1,6 +1,7 @@
 import React from 'react'
 import { View, Text, Image } from 'react-native';
 import styles from './styles';
+import { AntDesign, FontAwesome } from '@expo/vector-icons';
 
 const song = {
 	id: '1',
@@ -15,10 +16,16 @@ const PlayerWidget = () => {
 			{/* Image cover */}
 			<Image source={{ uri: song.imageUri }} style={styles.image} />
 			<View style={styles.rightContainer}>
-				{/* title */}
-				<Text style={styles.title}>{song.title}</Text>
-				{/* artist */}
-				<Text style={styles.artist}>{song.artist}</Text>
+				<View style={styles.leftContainer}>
+					{/* title */}
+					<Text style={styles.title}>{song.title}</Text>
+					{/* artist */}
+					<Text style={styles.artist}>{song.artist}</Text>
+				</View>
+				<View style={styles.iconContainer}>
+					<AntDesign size={30} name="hearto" color='white' />
+					<FontAwesome size={30} name="play" color='white' />
+				</View>
 			</View>
 		</View>
 	)
