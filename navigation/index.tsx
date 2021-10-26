@@ -16,7 +16,7 @@ import ModalScreen from '../screens/ModalScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
 import TabOneScreen from '../screens/HomeScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
-import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
+import { RootStackParamList, RootTabParamList, RootTabScreenProps, TabOneParamList, TabTwoParamList } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
 import AlbumScreen from '../screens/AlbumScreen';
 
@@ -38,12 +38,12 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator >
       <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
       <Stack.Group screenOptions={{ presentation: 'modal' }}>
         <Stack.Screen name="Modal" component={ModalScreen} />
-        <Stack.Screen name="AlbumScreen" component={AlbumScreen} />
+        {/* <Stack.Screen name="AlbumScreen" component={AlbumScreen} /> */}
       </Stack.Group>
     </Stack.Navigator>
   );
@@ -63,10 +63,11 @@ function BottomTabNavigator() {
       initialRouteName="TabOne"
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme].tint,
+        headerShown: false
       }}>
       <BottomTab.Screen
         name="TabOne"
-        component={TabOneScreen}
+        component={TabOneNavigator}
         options={({ navigation }: RootTabScreenProps<'TabOne'>) => ({
           title: 'Home',
           tabBarIcon: ({ color }) => <Entypo name="home" color={color} size={30} style={{marginBottom: -3}} />,
@@ -88,7 +89,7 @@ function BottomTabNavigator() {
       />
       <BottomTab.Screen
         name="TabTwo"
-        component={TabTwoScreen}
+        component={TabTwoNavigator}
         options={{
           title: 'Search',
           tabBarIcon: ({ color }) => <EvilIcons name="search" color={color} size={30} style={{marginBottom: -3}} />,
@@ -96,7 +97,7 @@ function BottomTabNavigator() {
       />
       <BottomTab.Screen
         name="TabThree"
-        component={TabTwoScreen}
+        component={TabTwoNavigator}
         options={{
           title: 'Your Library',
           tabBarIcon: ({ color }) => <MaterialCommunityIcons name="music" color={color} size={30} style={{marginBottom: -3}} />,
@@ -104,7 +105,7 @@ function BottomTabNavigator() {
       />
       <BottomTab.Screen
         name="TabFour"
-        component={TabTwoScreen}
+        component={TabTwoNavigator}
         options={{
           title: 'Premium',
           tabBarIcon: ({ color }) => <FontAwesome5 name="spotify" color={color} size={30} style={{marginBottom: -3}} />,
@@ -122,4 +123,38 @@ function TabBarIcon(props: {
   color: string;
 }) {
   return <FontAwesome size={30} style={{ marginBottom: -3 }} {...props} />;
+}
+
+const TabOneStack = createNativeStackNavigator<TabOneParamList>();
+
+function TabOneNavigator() {
+  return (
+    <TabOneStack.Navigator>
+      <TabOneStack.Screen
+        name="TabOneScreen"
+        component={TabOneScreen}
+        options={{ headerTitle: 'Home' }}
+      />
+
+      <TabOneStack.Screen
+        name="AlbumScreen"
+        component={AlbumScreen}
+        options={{ headerTitle: 'Album' }}
+      />
+    </TabOneStack.Navigator>
+  );
+}
+
+const TabTwoStack = createNativeStackNavigator<TabTwoParamList>();
+
+function TabTwoNavigator() {
+  return (
+    <TabTwoStack.Navigator>
+      <TabTwoStack.Screen
+        name="TabTwoScreen"
+        component={TabTwoScreen}
+        options={{ headerTitle: 'Tab Two Title' }}
+      />
+    </TabTwoStack.Navigator>
+  );
 }
